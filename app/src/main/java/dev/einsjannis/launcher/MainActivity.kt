@@ -56,10 +56,10 @@ class MainActivity : ComponentActivity() {
             }
         }.toMutableList()
         items.addLast(appItems.last())
-        items.addFirst(HeaderItem(appItems.first().app.name.first().toString()))/*
+        items.addFirst(HeaderItem(appItems.first().app.name.first().toString()))
         items.addFirst(CalendarItem())
         items.addFirst(TimeItem())
-        items.addFirst(SpaceItem())*/
+        items.addFirst(SpaceItem())
         setContent {
             LauncherTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
