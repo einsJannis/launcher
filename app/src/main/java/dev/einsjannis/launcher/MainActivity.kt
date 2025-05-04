@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val appItems = AppInfo.allApps(applicationContext).map { AppItem(it) }.toMutableList()
-        val items = appItems/*.zipWithNext().flatMap { (current, next) ->
+        val items = appItems.zipWithNext().flatMap { (current, next) ->
             if (current.app.name.first() == next.app.name.first()) {
                 listOf(current)
             } else {
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             }
         }.toMutableList()
         items.addLast(appItems.last())
-        items.addFirst(HeaderItem(appItems.first().app.name.first().toString()))
+        items.addFirst(HeaderItem(appItems.first().app.name.first().toString()))/*
         items.addFirst(CalendarItem())
         items.addFirst(TimeItem())
         items.addFirst(SpaceItem())*/
