@@ -1,6 +1,5 @@
 package dev.einsjannis.launcher.list
 
-import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
