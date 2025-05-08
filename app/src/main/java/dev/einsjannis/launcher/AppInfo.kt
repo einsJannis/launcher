@@ -28,16 +28,4 @@ class AppInfo {
         this.pm = context.packageManager
         this.resolveInfo = resolveInfo
     }
-
-    companion object {
-        fun allApps(context: Context): List<AppInfo> {
-            var intent = Intent(Intent.ACTION_MAIN).apply {
-                addCategory(Intent.CATEGORY_LAUNCHER)
-            }
-            val res = context.packageManager.queryIntentActivities(intent, 0)
-                .map { AppInfo(context, it) }
-                .sortedBy { it.name }
-            return res
-        }
-    }
 }
