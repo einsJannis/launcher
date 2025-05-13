@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import dev.einsjannis.launcher.list.AppItem
 import dev.einsjannis.launcher.list.HeaderItem
 import dev.einsjannis.launcher.list.Item
+import dev.einsjannis.launcher.menu.Menu
 
 class Apps(backing: List<AppInfo>) {
 
@@ -41,11 +43,11 @@ class Apps(backing: List<AppInfo>) {
         }
 
     @Composable
-    fun Element(context: Context, listState: LazyListState = LazyListState()) {
+    fun Element(context: Context, listState: LazyListState = LazyListState(), popUp: MutableState<Menu?>) {
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn (state = listState, modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
                 items(categorized) { item ->
-                    item.Element(context)
+                    item.Element(context, popUp)
                 }
             }
         }

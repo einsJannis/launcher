@@ -7,19 +7,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.einsjannis.launcher.menu.Menu
 import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class CalendarItem: Item() {
     @Composable
-    override fun Element(context: Context, modifier: Modifier) {
+    override fun Element(context: Context, modifier: Modifier, popUp: MutableState<Menu?>) {
         Box(modifier = modifier.clickable {
             context.startActivity(
                 Intent(Intent.ACTION_MAIN)

@@ -6,6 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.provider.Settings
+import androidx.core.net.toUri
 
 class AppInfo {
     val icon: Drawable
@@ -14,6 +17,11 @@ class AppInfo {
         get() = resolveInfo.loadLabel(pm).toString()
     val launchIntent
         get() = pm.getLaunchIntentForPackage(resolveInfo.activityInfo.packageName)
+    val infoIntent
+        get() = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = "package:${resolveInfo.activityInfo.packageName}".toUri()
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
 
     private val pm: PackageManager
     private val resolveInfo: ResolveInfo

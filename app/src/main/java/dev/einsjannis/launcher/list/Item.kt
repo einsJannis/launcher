@@ -1,17 +1,16 @@
 package dev.einsjannis.launcher.list
 
-import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.einsjannis.launcher.menu.Menu
 
 
 abstract class Item {
@@ -29,9 +28,9 @@ abstract class Item {
         ).merge(style), modifier = modifier)
     }
     @Composable
-    fun Element(context: Context) {
-        Element(context, Modifier.fillMaxWidth())
+    fun Element(context: Context, popUp: MutableState<Menu?>) {
+        Element(context, Modifier.fillMaxWidth(), popUp)
     }
     @Composable
-    protected abstract fun Element(context: Context, modifier: Modifier)
+    abstract fun Element(context: Context, modifier: Modifier, popUp: MutableState<Menu?>)
 }
