@@ -13,7 +13,6 @@ class Launcher : Application() {
         }
         val res = packageManager.queryIntentActivities(intent, 0)
             .map { AppInfo(applicationContext, it) }
-            .sortedBy { it.name }
         return@lazy ListScreen(res)
     }
 }

@@ -14,24 +14,28 @@ import dev.einsjannis.launcher.menu.Menu
 class ListScreen(apps: List<AppInfo>) : Screen() {
     override val name: String = "list"
 
-    val categories: List<Char> = apps.map { it.name.first() }.distinct()
+    val apps: List<AppInfo> = apps.sortedBy { it.name.uppercase() }
 
-    val categorized: List<Item> = listOf(SpaceItem()) + apps.map { AppItem(it) }.insertBetween { prev, next ->
-        val prevChar = prev?.let { it.app.name.first() }
-        if (next == null) return@insertBetween null
-        val nextChar = next.app.name.first()
-        if (prevChar != nextChar) HeaderItem(nextChar.toString()) else null
-    } + SpaceItem()
+    val categories: List<Char> = this.apps.map { it.name.uppercase().first() }.distinct()
 
-    override val items: List<Item> get() = categorized
+    val categorized: List<Item> = this.apps
+        .map { AppItem(it) }
+        .insertBetween { prev, next ->
+            val prevChar = prev?.let { it.app.name.first().uppercase() }
+            if (next == null) return@insertBetween null
+            val nextChar = next.app.name.first().uppercase()
+            if (prevChar != nextChar) HeaderItem(nextChar) else null
+        }
+
+    override val items: List<Item> get() = listOf(SpaceItem()) + categorized + SpaceItem()
 
     @Composable
     override fun Element(menu: MutableState<Menu?>, offset: MutableState<Int>) {
         val listState = rememberLazyListState()
         LaunchedEffect(offset.value) {
             Log.d("Offset", "Offset to scroll to ${offset.value}")
-            val target = categorized.indexOfFirst {
-                (it as? HeaderItem)?.text == categories[offset.value].toString()
+            val target = items.indexOfFirst {
+                (it as? HeaderItem)?.text?.uppercase() == categories[offset.value].uppercase()
             }
             Log.d("Offset", "Target to scroll to $target")
             listState.animateScrollToItem(target, scrollOffset = -listState.layoutInfo.viewportSize.height/3)

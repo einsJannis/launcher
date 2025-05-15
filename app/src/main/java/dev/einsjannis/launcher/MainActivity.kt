@@ -41,6 +41,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.einsjannis.launcher.menu.Menu
 import dev.einsjannis.launcher.ui.theme.LauncherTheme
+import kotlin.math.floor
 import kotlin.math.pow
 
 class MainActivity : ComponentActivity() {
@@ -106,8 +107,12 @@ class MainActivity : ComponentActivity() {
                         dragActive = true
                         val y = change.position.y
                         val currentDestination = navHostController.currentBackStackEntry?.destination?.route
-                        val index = (y / 95).toInt()
-                            .coerceIn(0, categories.lastIndex)
+                        Log.d("PointerInput", "PointerInputY $y")
+                        Log.d("PointerInput", "PointerInputHeight ${size.height}")
+                        val frac = (y / size.height.toFloat())
+                        Log.d("PointerInput", "PointerInputFrac $frac")
+                        val index = floor(categories.size * frac).toInt()
+                        Log.d("PointerInput", "PointerInputIndex $index")
                         if (currentDestination != application.listScreen.name) {
                             Log.d("SWITCH", "SWITCH BC $currentDestination != ${application.listScreen.name}")
                             navHostController.navigate(application.listScreen.name)
@@ -128,7 +133,7 @@ class MainActivity : ComponentActivity() {
                 )
                 Text(
                     category.toString(), style = TextStyle(
-                        fontSize = 22.sp,
+                        fontSize = 18.sp,
                         color = Color.White,
                         shadow = Shadow(
                             color = Color.Black,

@@ -1,11 +1,14 @@
 package dev.einsjannis.launcher
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.einsjannis.launcher.list.Item
@@ -33,7 +36,7 @@ abstract class Screen {
     fun List(menu: MutableState<Menu?>, listState: LazyListState) {
         LazyColumn(state = listState) {
             items(items) { item ->
-                item.Element(menu = menu)
+                item.Element(menu = menu, modifier = Modifier.padding(horizontal = 20.dp))
             }
         }
     }

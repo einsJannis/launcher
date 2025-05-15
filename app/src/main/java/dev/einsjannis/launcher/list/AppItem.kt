@@ -23,7 +23,7 @@ class AppItem(val app: AppInfo): Item() {
     @Composable
     fun Icon(modifier: Modifier = Modifier) {
         val imageBitmap = app.icon.toBitmap().asImageBitmap()
-        Image(imageBitmap, app.name + " Icon", modifier)
+        Image(imageBitmap, app.name + " Icon", modifier.padding(10.dp))
     }
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
@@ -31,13 +31,13 @@ class AppItem(val app: AppInfo): Item() {
         val context = LocalContext.current
         Row (
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.height(80.dp).padding(10.dp).combinedClickable(
+            modifier = modifier.height(60.dp).combinedClickable(
                 onClick = { context.startActivity(app.launchIntent) },
                 onLongClick = { menu.value = this.popUp }
             )
         ) {
             Icon()
-            Title(app.name, Modifier.padding(start = 20.dp))
+            Title(app.name, Modifier.padding(10.dp))
         }
     }
 

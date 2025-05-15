@@ -21,7 +21,7 @@ abstract class Item {
     ) {
         Text(text, style = TextStyle(
             color = Color.White, // TODO: Base on inversion of dominant wallpaper color
-            fontSize = 22.sp,
+            fontSize = 18.sp,
             shadow = Shadow(blurRadius = 7f)
         ).merge(style), modifier = modifier)
     }
