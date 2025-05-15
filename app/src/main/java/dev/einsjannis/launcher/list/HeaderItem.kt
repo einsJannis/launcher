@@ -11,9 +11,9 @@ import dev.einsjannis.launcher.menu.Menu
 
 class HeaderItem(val text: String): Item() {
     @Composable
-    override fun Element(context: Context, modifier: Modifier, popUp: MutableState<Menu?>) {
+    override fun Element(modifier: Modifier, menu: MutableState<Menu?>) {
         Box(modifier = modifier.padding(horizontal = 10.dp).padding(top = 20.dp, bottom = 10.dp)) {
-            Title(context, text)
+            Title(text)
         }
     }
 }

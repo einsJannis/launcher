@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,7 +25,8 @@ import java.time.format.DateTimeFormatter
 
 class TimeItem: Item() {
     @Composable
-    override fun Element(context: Context, modifier: Modifier, popUp: MutableState<Menu?>) {
+    override fun Element(modifier: Modifier, menu: MutableState<Menu?>) {
+        val context = LocalContext.current
         Box(modifier = modifier.clickable {
             context.startActivity(
                 Intent(AlarmClock.ACTION_SHOW_ALARMS)
@@ -41,7 +43,6 @@ class TimeItem: Item() {
             }
 
             Title(
-                context,
                 time.format(DateTimeFormatter.ofPattern("HH:mm")),
                 style = TextStyle(fontSize = 80.sp),
                 modifier = Modifier.padding(horizontal = 10.dp)

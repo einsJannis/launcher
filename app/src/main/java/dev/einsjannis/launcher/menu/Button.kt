@@ -6,5 +6,5 @@ import androidx.compose.ui.Modifier
 
 abstract class Button {
     @Composable
-    abstract fun Element(context: Context, popUp: Menu, modifier: Modifier = Modifier)
+    abstract fun Element(popUp: Menu, modifier: Modifier = Modifier)
 }

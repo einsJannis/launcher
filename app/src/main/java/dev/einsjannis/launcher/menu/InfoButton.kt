@@ -9,11 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 class InfoButton : Button() {
     @Composable
-    override fun Element(context: Context, popUp: Menu, modifier: Modifier) {
+    override fun Element(popUp: Menu, modifier: Modifier) {
+        val context = LocalContext.current
         Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.clickable {
             context.startActivity(popUp.appItem.app.infoIntent)
         }) {

@@ -12,7 +12,7 @@ import dev.einsjannis.launcher.menu.Menu
 
 class SpaceItem(private val height: Dp = 250.dp): Item() {
     @Composable
-    override fun Element(context: Context, modifier: Modifier, popUp: MutableState<Menu?>) {
+    override fun Element(modifier: Modifier, menu: MutableState<Menu?>) {
         Box(modifier = modifier.height(height))
     }
 }

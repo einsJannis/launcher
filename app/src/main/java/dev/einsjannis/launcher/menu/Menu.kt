@@ -23,7 +23,7 @@ import dev.einsjannis.launcher.list.AppItem
 
 class Menu(val appItem: AppItem, private val buttons: List<Button>) {
     @Composable
-    fun Element(context: Context, modifier: Modifier = Modifier) {
+    fun Element(modifier: Modifier = Modifier) {
         Surface(
             modifier = modifier
                 .fillMaxWidth(),
@@ -32,15 +32,14 @@ class Menu(val appItem: AppItem, private val buttons: List<Button>) {
         ) {
             Column(modifier = modifier.fillMaxWidth().background(Color.DarkGray)) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(80.dp)) {
-                    appItem.Icon(context, Modifier.padding(20.dp))
-                    appItem.Title(context, appItem.app.name)
+                    appItem.Icon(Modifier.padding(20.dp))
+                    appItem.Title(appItem.app.name)
                 }
                 HorizontalDivider()
                 Row(modifier = Modifier.height(200.dp)) {
                     Column {
                         for (button in buttons) {
                             button.Element(
-                                context,
                                 this@Menu,
                                 modifier = Modifier.height(80.dp).fillMaxWidth()
                             )
