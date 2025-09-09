@@ -1,11 +1,15 @@
 package dev.einsjannis.launcher.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -31,8 +35,8 @@ fun Launcher(
     scrollBar: MutableScrollBarViewModel = viewModel(factory = MutableScrollBarViewModel.Factory(list, controller)),
     popUp: PopUpViewModel = viewModel(factory = PopUpViewModel.Factory)
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Box(modifier = Modifier.padding(start = 5.dp, end = 5.dp)) { //CONTENT
+    Scaffold(modifier = modifier.fillMaxSize(), containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onBackground) {
+        Box(modifier = Modifier.padding(it)) { //CONTENT
             NavHost(controller, Screen.FAVORITE.toString()) {
                 composable(Screen.FAVORITE.toString()) {
                     FavoritesScreen(favorites, popUp, modifier)

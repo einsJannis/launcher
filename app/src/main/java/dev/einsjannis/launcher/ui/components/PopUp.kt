@@ -72,6 +72,6 @@ fun Button(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
             .height(60.dp)
             //.padding(20.dp)
             .clickable(onClick = onClick)) {
-        Text(text, modifier = Modifier.padding(20.dp), color = Color.White)
+        Text(text, modifier = Modifier.padding(20.dp))
     }
 }
