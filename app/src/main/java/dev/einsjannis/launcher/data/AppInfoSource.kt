@@ -26,7 +26,10 @@ class AppInfoSource(private val database: Database) {
     }
     suspend fun toggleFavorite(packageName: String) {
         val app = getOrInsert(packageName)
-        app.favorite = (dao.getGreatestFavorite() ?: 0) + 1
+        if (app.favorite == null)
+            app.favorite = (dao.getGreatestFavorite() ?: 0) + 1
+        else
+            app.favorite = null
         dao.update(app)
     }
     suspend fun toggleHidden(packageName: String) {
