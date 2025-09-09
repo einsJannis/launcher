@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LauncherTheme { Launcher(modifier = Modifier.padding(start = 5.dp, end = 5.dp)) }
+            LauncherTheme { Launcher() }
         }
     }
 }

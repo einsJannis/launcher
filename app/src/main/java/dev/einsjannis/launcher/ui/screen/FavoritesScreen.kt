@@ -16,15 +16,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.einsjannis.launcher.ui.components.App
+import dev.einsjannis.launcher.ui.components.PopUpViewModel
 
 @Composable
-fun FavoritesScreen(favorites: FavoritesViewModel, modifier: Modifier = Modifier) {
+fun FavoritesScreen(favorites: FavoritesViewModel, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize().padding(horizontal = 40.dp)) {
         val height = LocalConfiguration.current.screenHeightDp.dp/2 - 100.dp
         Box(Modifier.height(height).fillMaxWidth())
         val apps by favorites.apps.collectAsState()
         for (app in apps) {
-            App(app)
+            App(app,popUpViewModel)
         }
     }
 }

@@ -10,12 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Category(categoryViewModel: CategoryViewModel, modifier: Modifier = Modifier) {
+fun Category(categoryViewModel: CategoryViewModel, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     Column(modifier) {
         Text(categoryViewModel.title, Modifier.padding(vertical = 5.dp))
         val apps by categoryViewModel.apps.collectAsState()
         for (app in apps) {
-            App(app)
+            App(app, popUpViewModel)
         }
     }
 }

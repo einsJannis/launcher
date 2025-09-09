@@ -23,15 +23,28 @@ import dev.einsjannis.launcher.domain.App
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun App(app: App, modifier: Modifier = Modifier) {
+fun App(app: App, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Row(modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).combinedClickable(onClick = {
         val intent = context.packageManager.getLaunchIntentForPackage(app.packageName)
         if (intent!=null) context.startActivity(intent)
+    }, onLongClick = {
+        popUpViewModel.open(app)
     })) {
-        val image = app.icon ?: context.resources.getDrawable(context.applicationInfo.icon, context.theme)
-        val pixelSize = with(LocalDensity.current) {40.dp.roundToPx()}
-        Image(image.toBitmap(width = pixelSize, height = pixelSize).asImageBitmap(), "icon", modifier = Modifier.padding(10.dp))
-        Text(app.label, modifier = Modifier.align(Alignment.CenterVertically).padding(10.dp))
+        Icon(app)
+        Title(app, Modifier.align(Alignment.CenterVertically))
     }
+}
+
+@Composable
+fun Icon(app: App) {
+    val context = LocalContext.current
+    val image = app.icon ?: context.resources.getDrawable(context.applicationInfo.icon, context.theme)
+    val pixelSize = with(LocalDensity.current) {40.dp.roundToPx()}
+    Image(image.toBitmap(width = pixelSize, height = pixelSize).asImageBitmap(), "icon", modifier = Modifier.padding(10.dp))
+}
+
+@Composable
+fun Title(app: App, modifier: Modifier = Modifier) {
+    Text(app.label, modifier = modifier.padding(10.dp))
 }

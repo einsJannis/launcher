@@ -19,10 +19,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.einsjannis.launcher.ui.components.Category
+import dev.einsjannis.launcher.ui.components.PopUpViewModel
 import dev.einsjannis.launcher.ui.components.ScrollBarViewModel
 
 @Composable
-fun ListScreen(list: ListViewModel, scrollBar: ScrollBarViewModel, modifier: Modifier = Modifier) {
+fun ListScreen(list: ListViewModel, scrollBar: ScrollBarViewModel, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     val categoryIndices = list.categoryIndices.collectAsState()
     val categories by remember { derivedStateOf { categoryIndices.value.map { list.allCategories[it] } } }
     val lazyListState = rememberLazyListState()
@@ -34,7 +35,7 @@ fun ListScreen(list: ListViewModel, scrollBar: ScrollBarViewModel, modifier: Mod
     LazyColumn(modifier = modifier.fillMaxSize().padding(horizontal = 40.dp), state = lazyListState) {
         itemsIndexed(categories) { index, it ->
             if (index == 0) Box(Modifier.height(height).fillMaxWidth())
-            Category(it)
+            Category(it, popUpViewModel)
             if (index == categories.lastIndex) Box(Modifier.height(height).fillMaxWidth())
         }
     }
