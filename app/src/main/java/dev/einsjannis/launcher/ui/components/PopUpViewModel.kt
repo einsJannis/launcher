@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.einsjannis.launcher.Application
 import dev.einsjannis.launcher.data.AppRepository
 import dev.einsjannis.launcher.domain.App
+import dev.einsjannis.launcher.ui.screen.FavoritesViewModel
 import kotlinx.coroutines.launch
 
 class PopUpViewModel(val repository: AppRepository) : ViewModel() {

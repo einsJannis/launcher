@@ -20,9 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.einsjannis.launcher.ui.screen.FavoritesViewModel
 
 @Composable
-fun PopUp(popUp: PopUpViewModel, modifier: Modifier = Modifier) {
+fun PopUp(popUp: PopUpViewModel, favorites: FavoritesViewModel, modifier: Modifier = Modifier) {
     if (!popUp.isOpen.value) return
     val app = popUp.app.value!!
     Box(
@@ -52,12 +53,25 @@ fun PopUp(popUp: PopUpViewModel, modifier: Modifier = Modifier) {
                 HorizontalDivider()
                 Button("Open Settings") {
                     popUp.openSettings(context)
+                    popUp.close()
                 }
-                Button("Toggle Favorite") {
+                Button(if (app.isFavorite) "Unfavorite" else "Favorite") {
                     popUp.toggleFavorite()
+                    popUp.close()
                 }
-                Button("Toggle Hidden") {
+                if (app.isFavorite) {
+                    Button("Move Up") {
+                        favorites.moveUp(app)
+                        popUp.close()
+                    }
+                    Button("Move Down") {
+                        favorites.moveDown(app)
+                        popUp.close()
+                    }
+                }
+                Button(if (app.isHidden) "Show" else "Hide") {
                     popUp.toggleHidden()
+                    popUp.close()
                 }
             }
         }

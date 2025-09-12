@@ -12,6 +12,9 @@ class AppInfoSource(private val database: Database) {
         dao.insert(packageName)
         return dao.get(packageName)!!
     }
+    suspend fun newFavoriteInfo(): FavoriteInfo {
+        return FavoriteInfo(dao.getGreatestFavorite() ?: 0)
+    }
     suspend fun getFavoriteInfo(packageName: String): FavoriteInfo? {
         return getOrInsert(packageName).favorite?.let { FavoriteInfo(it) }
     }
@@ -23,18 +26,5 @@ class AppInfoSource(private val database: Database) {
     }
     suspend fun setHidden(packageName: String, hidden: Boolean) {
         dao.setHidden(packageName, hidden)
-    }
-    suspend fun toggleFavorite(packageName: String) {
-        val app = getOrInsert(packageName)
-        if (app.favorite == null)
-            app.favorite = (dao.getGreatestFavorite() ?: 0) + 1
-        else
-            app.favorite = null
-        dao.update(app)
-    }
-    suspend fun toggleHidden(packageName: String) {
-        val app = getOrInsert(packageName)
-        app.isHidden = !app.isHidden
-        dao.update(app)
     }
 }
