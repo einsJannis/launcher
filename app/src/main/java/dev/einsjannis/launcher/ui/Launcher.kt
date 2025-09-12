@@ -1,12 +1,17 @@
 package dev.einsjannis.launcher.ui
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -23,7 +28,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.einsjannis.launcher.ui.components.Button
 import dev.einsjannis.launcher.ui.components.MutableScrollBarViewModel
 import dev.einsjannis.launcher.ui.components.PopUp
 import dev.einsjannis.launcher.ui.components.PopUpViewModel
@@ -74,8 +78,10 @@ fun Launcher(
 @Composable
 fun SearchButton(navHostController: NavHostController, modifier: Modifier = Modifier) {
     Box(modifier = modifier.padding(20.dp)) {
-        Button("Search", modifier = Modifier.clip(CircleShape).background(Color.DarkGray).size(80.dp)) {
+        Button(modifier = Modifier.clip(CircleShape).background(Color.DarkGray).size(70.dp), onClick = {
             navHostController.navigate(Screen.SEARCH.toString())
+        }) {
+            Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White, modifier = Modifier.size(70.dp))
         }
     }
 }
