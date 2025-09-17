@@ -43,6 +43,9 @@ class MutableScrollBarViewModel(
             },
             onDragEnd = {
                 isHeld.value = false
+            },
+            onDragCancel = {
+                isHeld.value = false
             }
         ) }
     }

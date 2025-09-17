@@ -1,5 +1,8 @@
 package dev.einsjannis.launcher.ui.components
 
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.VectorizedAnimationSpec
+import androidx.compose.animation.core.VectorizedFloatAnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset

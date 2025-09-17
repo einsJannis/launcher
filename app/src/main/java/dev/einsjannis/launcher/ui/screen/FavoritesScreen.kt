@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +27,13 @@ import dev.einsjannis.launcher.ui.components.Watch
 fun FavoritesScreen(favorites: FavoritesViewModel, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     val apps by favorites.apps.collectAsState()
     LazyColumn(modifier.fillMaxSize().padding(horizontal = 40.dp)) {
-        itemsIndexed(apps) { index, app ->
+        if (apps.isEmpty()) items(listOf(Unit)) {
+            val height = (LocalConfiguration.current.screenHeightDp.dp / 2
+                    - 200.dp - with(LocalDensity.current) { 60.sp.toDp() })
+            Box(Modifier.height(height).fillMaxWidth())
+            Watch(Modifier.fillMaxWidth())
+            Calendar(Modifier.fillMaxWidth())
+        } else itemsIndexed(apps) { index, app ->
             if (index == 0) {
                 val height = (LocalConfiguration.current.screenHeightDp.dp / 2
                   - 200.dp - with(LocalDensity.current) { 60.sp.toDp() })
