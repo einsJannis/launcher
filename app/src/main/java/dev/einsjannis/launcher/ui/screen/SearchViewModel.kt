@@ -1,6 +1,5 @@
 package dev.einsjannis.launcher.ui.screen
 
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -13,6 +12,7 @@ import dev.einsjannis.launcher.domain.App
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import me.xdrop.fuzzywuzzy.FuzzySearch
 
 class SearchViewModel(val appRepository: AppRepository) : ViewModel() {
     private val _result: MutableStateFlow<List<App>> = MutableStateFlow(emptyList())
@@ -20,7 +20,8 @@ class SearchViewModel(val appRepository: AppRepository) : ViewModel() {
 
     fun search(search: String) {
         viewModelScope.launch {
-            _result.value = appRepository.apps.value.filter { it.label.contains(search, ignoreCase = true) }.sortedBy { it.label.uppercase() }
+            _result.value = FuzzySearch.extractSorted(search, appRepository.apps.value.map { it.label }, 20)
+                .flatMap { appRepository.apps.value.filter { inner -> inner.label == it.string } }
         }
     }
 
