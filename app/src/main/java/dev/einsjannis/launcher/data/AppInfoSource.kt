@@ -13,7 +13,7 @@ class AppInfoSource(private val database: Database) {
         return dao.get(packageName)!!
     }
     suspend fun newFavoriteInfo(): FavoriteInfo {
-        return FavoriteInfo(dao.getGreatestFavorite() ?: 0)
+        return FavoriteInfo((dao.getGreatestFavorite()?.plus(1)) ?: 0)
     }
     suspend fun getFavoriteInfo(packageName: String): FavoriteInfo? {
         return getOrInsert(packageName).favorite?.let { FavoriteInfo(it) }

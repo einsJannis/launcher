@@ -2,7 +2,7 @@ package dev.einsjannis.launcher.ui.components
 
 import android.content.Intent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun Calendar(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Box(modifier.clip(RoundedCornerShape(10.dp)).clickable {
+    Row(modifier.clip(RoundedCornerShape(10.dp)).clickable {
         context.startActivity(Intent(Intent.ACTION_MAIN)
             .apply {
                 addCategory(Intent.CATEGORY_APP_CALENDAR)

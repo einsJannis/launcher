@@ -4,6 +4,7 @@ import android.content.Intent
 import android.provider.AlarmClock
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -25,7 +26,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun Watch(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Box(modifier.clip(RoundedCornerShape(10.dp)).clickable(onClick = {
+    Row(modifier.clip(RoundedCornerShape(10.dp)).clickable(onClick = {
         context.startActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS)
             .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK })
     })) {
