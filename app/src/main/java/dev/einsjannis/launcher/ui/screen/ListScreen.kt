@@ -27,7 +27,7 @@ fun ListScreen(list: ListViewModel, scrollBar: ScrollBarViewModel, popUpViewMode
     val categoryIndices = list.categoryIndices.collectAsState()
     val categories by remember { derivedStateOf { categoryIndices.value.map { list.allCategories[it] } } }
     val lazyListState = rememberLazyListState()
-    val height = LocalConfiguration.current.screenHeightDp.dp/2 - 100.dp
+    val height = LocalConfiguration.current.screenHeightDp.dp/2 - 200.dp
     val heightPx = with(LocalDensity.current) { height.roundToPx() }
     LaunchedEffect(scrollBar.index.value) {
         lazyListState.animateScrollToItem(scrollBar.index.value, scrollOffset = -heightPx)

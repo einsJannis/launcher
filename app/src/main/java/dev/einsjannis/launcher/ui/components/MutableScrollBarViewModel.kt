@@ -49,6 +49,11 @@ class MutableScrollBarViewModel(
             }
         ) }
     }
+    fun handleClick(index: Int): () -> Unit = {
+        if (controller.currentBackStackEntry?.destination?.route != Screen.LIST.toString())
+            controller.navigate(Screen.LIST.toString())
+        scrollYPos.value = (index.toFloat() / list.categoryIndices.value.size.toFloat())
+    }
     fun offset(index: Int): Float {
         val distance = (index.toFloat() / list.categoryIndices.value.size.toFloat()) - scrollYPos.value
         val d = distance*list.categoryIndices.value.size
