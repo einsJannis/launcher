@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
 
 class MutableScrollBarViewModel(
     val list: ListViewModel,
-    val controller: NavController
+    val screen: MutableState<Screen>
 ) : ScrollBarViewModel() {
     val scrollYPos: MutableState<Float> = mutableFloatStateOf(0f)
     override val isHeld: MutableState<Boolean> = mutableStateOf(false)
@@ -37,8 +37,8 @@ class MutableScrollBarViewModel(
                 scrollYPos.value = (change.position.y / height).coerceIn(0f, 1f)
             },
             onDragStart = {
-                if (controller.currentBackStackEntry?.destination?.route != Screen.LIST.toString())
-                    controller.navigate(Screen.LIST.toString())
+                if (screen.value != Screen.LIST)
+                    screen.value = Screen.LIST
                 isHeld.value = true
             },
             onDragEnd = {
@@ -50,8 +50,8 @@ class MutableScrollBarViewModel(
         ) }
     }
     fun handleClick(index: Int): () -> Unit = {
-        if (controller.currentBackStackEntry?.destination?.route != Screen.LIST.toString())
-            controller.navigate(Screen.LIST.toString())
+        if (screen.value != Screen.LIST)
+            screen.value = Screen.LIST
         scrollYPos.value = (index.toFloat() / list.categoryIndices.value.size.toFloat())
     }
     fun offset(index: Int): Float {
@@ -60,10 +60,10 @@ class MutableScrollBarViewModel(
         return 1.2f.pow(-(d*d))*80f
     }
     companion object {
-        fun Factory(list: ListViewModel, controller: NavController): ViewModelProvider.Factory {
+        fun Factory(list: ListViewModel, screen: MutableState<Screen>): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
-                    MutableScrollBarViewModel(list, controller)
+                    MutableScrollBarViewModel(list, screen)
                 }
             }
         }

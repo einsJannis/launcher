@@ -1,6 +1,7 @@
 package dev.einsjannis.launcher.ui
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -44,42 +49,45 @@ fun Launcher(
     modifier: Modifier = Modifier,
     favorites: FavoritesViewModel = viewModel(factory = FavoritesViewModel.Factory),
     list: ListViewModel = viewModel(factory = ListViewModel.Factory),
-    controller: NavHostController = rememberNavController(),
-    scrollBar: MutableScrollBarViewModel = viewModel(factory = MutableScrollBarViewModel.Factory(list, controller)),
+    screen: MutableState<Screen> = remember { mutableStateOf(Screen.FAVORITE) },
+    scrollBar: MutableScrollBarViewModel = viewModel(factory = MutableScrollBarViewModel.Factory(list, screen)),
     popUp: PopUpViewModel = viewModel(factory = PopUpViewModel.Factory)
 ) {
     Scaffold(modifier = modifier.fillMaxSize(), containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onBackground) {
         val padding = it
-        NavHost(controller, Screen.FAVORITE.toString()) {
-            composable(Screen.FAVORITE.toString()) {
-                Box(modifier = Modifier.padding(padding)) { //CONTENT
+        LifecycleResumeEffect(Unit) {
+            screen.value = Screen.FAVORITE
+            onPauseOrDispose {}
+        }
+        BackHandler {
+            screen.value = Screen.FAVORITE
+        }
+        Box(modifier = Modifier.padding(padding)) { //CONTENT
+            when (screen.value) {
+                Screen.FAVORITE -> {
                     FavoritesScreen(favorites, popUp, modifier)
-                    ScrollBar(scrollBar, modifier = Modifier.align(Alignment.CenterEnd))
-                    SearchButton(controller, modifier = Modifier.align(Alignment.BottomEnd))
+                    SearchButton(screen, modifier = Modifier.align(Alignment.BottomEnd))
                 }
-            }
-            composable(Screen.LIST.toString()) {
-                Box(modifier = Modifier.padding(padding)) { //CONTENT
+                Screen.LIST -> {
                     ListScreen(list, scrollBar, popUp, modifier)
-                    ScrollBar(scrollBar, modifier = Modifier.align(Alignment.CenterEnd))
-                    SearchButton(controller, modifier = Modifier.align(Alignment.BottomEnd))
+                    SearchButton(screen, modifier = Modifier.align(Alignment.BottomEnd))
                 }
-            }
-            composable(Screen.SEARCH.toString()) {
-                Box(modifier = Modifier.padding(padding)) { //CONTENT
+                Screen.SEARCH -> {
                     SearchScreen(popUp)
                 }
             }
+            if (screen.value != Screen.SEARCH)
+                ScrollBar(scrollBar, modifier = Modifier.align(Alignment.CenterEnd))
         }
         PopUp(popUp,favorites)
     }
 }
 
 @Composable
-fun SearchButton(navHostController: NavHostController, modifier: Modifier = Modifier) {
+fun SearchButton(screen: MutableState<Screen>, modifier: Modifier = Modifier) {
     Box(modifier = modifier.padding(20.dp)) {
         Button(modifier = Modifier.clip(CircleShape).background(Color.DarkGray).size(70.dp), onClick = {
-            navHostController.navigate(Screen.SEARCH.toString())
+            screen.value = Screen.SEARCH
         }) {
             Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White, modifier = Modifier.size(70.dp))
         }
