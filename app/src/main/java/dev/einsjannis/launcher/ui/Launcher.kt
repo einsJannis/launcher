@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -53,7 +55,10 @@ fun Launcher(
     scrollBar: MutableScrollBarViewModel = viewModel(factory = MutableScrollBarViewModel.Factory(list, screen)),
     popUp: PopUpViewModel = viewModel(factory = PopUpViewModel.Factory)
 ) {
-    Scaffold(modifier = modifier.fillMaxSize(), containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onBackground) {
+    Scaffold(modifier = modifier.fillMaxSize(), containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onBackground, floatingActionButton = {
+        if (screen.value != Screen.SEARCH)
+            SearchButton(screen)
+    }) {
         val padding = it
         LifecycleResumeEffect(Unit) {
             screen.value = Screen.FAVORITE
@@ -66,11 +71,9 @@ fun Launcher(
             when (screen.value) {
                 Screen.FAVORITE -> {
                     FavoritesScreen(favorites, popUp, modifier)
-                    SearchButton(screen, modifier = Modifier.align(Alignment.BottomEnd))
                 }
                 Screen.LIST -> {
                     ListScreen(list, scrollBar, popUp, modifier)
-                    SearchButton(screen, modifier = Modifier.align(Alignment.BottomEnd))
                 }
                 Screen.SEARCH -> {
                     SearchScreen(popUp)
@@ -85,11 +88,7 @@ fun Launcher(
 
 @Composable
 fun SearchButton(screen: MutableState<Screen>, modifier: Modifier = Modifier) {
-    Box(modifier = modifier.padding(20.dp)) {
-        Button(modifier = Modifier.clip(CircleShape).background(Color.DarkGray).size(70.dp), onClick = {
-            screen.value = Screen.SEARCH
-        }) {
-            Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White, modifier = Modifier.size(70.dp))
-        }
+    FloatingActionButton(onClick = { screen.value = Screen.SEARCH }, modifier = modifier.clip(RoundedCornerShape(35.dp)), containerColor = Color.Black) {
+        Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White, modifier = Modifier.size(70.dp).padding(20.dp))
     }
 }
