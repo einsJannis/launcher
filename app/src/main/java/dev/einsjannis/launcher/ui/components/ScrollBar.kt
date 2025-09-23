@@ -1,8 +1,5 @@
 package dev.einsjannis.launcher.ui.components
 
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.VectorizedAnimationSpec
-import androidx.compose.animation.core.VectorizedFloatAnimationSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun ScrollBar(scrollBar: MutableScrollBarViewModel, modifier: Modifier = Modifier) {
@@ -34,7 +31,7 @@ fun ScrollBar(scrollBar: MutableScrollBarViewModel, modifier: Modifier = Modifie
         items.iterator().withIndex().forEach { (index, category) ->
             val animateFloat by animateFloatAsState(scrollBar.offset(index))
             val modifier = if (scrollBar.isHeld.value) { Modifier.offset(x = (-animateFloat).dp) } else { Modifier }
-            Text(category.title, modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp)).clickable(onClick = scrollBar.handleClick(index)), textAlign = TextAlign.Center)
+            Text(category.title, modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp)).clickable(onClick = scrollBar.handleClick(index)), textAlign = TextAlign.Center, fontSize = 15.sp, lineHeight = 20.sp)
         }
     }
 }
