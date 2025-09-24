@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.einsjannis.launcher"
+    namespace = "dev.einsjannis.uindex"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "dev.einsjannis.launcher"
+        applicationId = "dev.einsjannis.uindex"
         minSdk = 33
         targetSdk = 36
         versionCode = 1
@@ -42,16 +42,14 @@ android {
 }
 
 dependencies {
-    val hilt_version = "2.56.2"
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
 
-    val room_version = "2.7.2"
-    implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
-    implementation("me.xdrop:fuzzywuzzy:1.4.0")
+    implementation(libs.fuzzywuzzy)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
