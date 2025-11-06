@@ -19,22 +19,27 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.einsjannis.uindex.ui.components.Category
+import dev.einsjannis.uindex.ui.components.Info
 import dev.einsjannis.uindex.ui.components.PopUpViewModel
-import dev.einsjannis.uindex.ui.components.ScrollBarViewModel
+import dev.einsjannis.uindex.ui.components.ScrollBarState
 
 @Composable
-fun ListScreen(list: ListViewModel, scrollBar: ScrollBarViewModel, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
+fun ListScreen(favoritesViewModel: FavoritesViewModel, list: ListViewModel, scrollBar: ScrollBarState, popUpViewModel: PopUpViewModel, modifier: Modifier = Modifier) {
     val categoryIndices = list.categoryIndices.collectAsState()
     val categories by remember { derivedStateOf { categoryIndices.value.map { list.allCategories[it] } } }
     val lazyListState = rememberLazyListState()
     val height = LocalConfiguration.current.screenHeightDp.dp/2 - 200.dp
     val heightPx = with(LocalDensity.current) { height.roundToPx() }
-    LaunchedEffect(scrollBar.index.value) {
-        lazyListState.animateScrollToItem(scrollBar.index.value, scrollOffset = -heightPx)
+    LaunchedEffect(scrollBar.index) {
+        lazyListState.animateScrollToItem(scrollBar.index, scrollOffset = -heightPx)
     }
     LazyColumn(modifier = modifier.fillMaxSize().padding(horizontal = 40.dp), state = lazyListState) {
         itemsIndexed(categories) { index, it ->
-            if (index == 0) Box(Modifier.height(height).fillMaxWidth())
+            if (index == 0) {
+                Box(Modifier.height(height).fillMaxWidth())
+                if (favoritesViewModel.apps.collectAsState().value.isEmpty())
+                    Info("Long press on apps to add to favorites")
+            }
             Category(it, popUpViewModel)
             if (index == categories.lastIndex) Box(Modifier.height(height).fillMaxWidth())
         }

@@ -50,6 +50,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.fuzzywuzzy)
+    implementation(libs.accompanist.drawablepainter)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

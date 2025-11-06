@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,10 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.einsjannis.uindex.ui.components.MutableScrollBarViewModel
+import dev.einsjannis.uindex.ui.components.MutableScrollBarState
 import dev.einsjannis.uindex.ui.components.PopUp
 import dev.einsjannis.uindex.ui.components.PopUpViewModel
 import dev.einsjannis.uindex.ui.components.ScrollBar
+import dev.einsjannis.uindex.ui.components.ScrollBarState
+import dev.einsjannis.uindex.ui.components.rememberScrollBarState
 import dev.einsjannis.uindex.ui.screen.FavoritesScreen
 import dev.einsjannis.uindex.ui.screen.FavoritesViewModel
 import dev.einsjannis.uindex.ui.screen.ListScreen
@@ -40,7 +43,7 @@ fun Launcher(
     favorites: FavoritesViewModel = viewModel(factory = FavoritesViewModel.Factory),
     list: ListViewModel = viewModel(factory = ListViewModel.Factory),
     screen: MutableState<Screen> = remember { mutableStateOf(Screen.FAVORITE) },
-    scrollBar: MutableScrollBarViewModel = viewModel(factory = MutableScrollBarViewModel.Factory(list, screen)),
+    scrollBar: MutableScrollBarState = rememberScrollBarState(list),
     popUp: PopUpViewModel = viewModel(factory = PopUpViewModel.Factory)
 ) {
     Scaffold(modifier = modifier.fillMaxSize(), containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onBackground, floatingActionButton = {
@@ -58,10 +61,13 @@ fun Launcher(
         Box(modifier = Modifier.padding(padding)) { //CONTENT
             when (screen.value) {
                 Screen.FAVORITE -> {
+                    LaunchedEffect(scrollBar.isHeld) {
+                        if (scrollBar.isHeld) screen.value = Screen.LIST
+                    }
                     FavoritesScreen(favorites, popUp, modifier)
                 }
                 Screen.LIST -> {
-                    ListScreen(list, scrollBar, popUp, modifier)
+                    ListScreen(favorites, list, scrollBar, popUp, modifier)
                 }
                 Screen.SEARCH -> {
                     SearchScreen(popUp)

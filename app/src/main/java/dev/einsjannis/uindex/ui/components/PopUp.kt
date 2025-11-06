@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import dev.einsjannis.uindex.ui.screen.FavoritesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +32,7 @@ fun PopUp(popUp: PopUpViewModel, favorites: FavoritesViewModel, modifier: Modifi
         val context = LocalContext.current
         Column(modifier = modifier.fillMaxWidth()) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 0.dp, start = 10.dp, end = 10.dp, bottom = 10.dp)) {
-                Icon(app)
+                Icon(rememberDrawablePainter(app.icon))
                 Title(app, Modifier.align(Alignment.CenterVertically))
             }
             HorizontalDivider()

@@ -1,5 +1,6 @@
 package dev.einsjannis.uindex.ui.components
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,16 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ScrollBar(scrollBar: MutableScrollBarViewModel, modifier: Modifier = Modifier) {
+fun ScrollBar(scrollBar: MutableScrollBarState, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.pointerInput(Unit, scrollBar.handlePointerInput).width(60.dp).padding(start = 27.dp, end = 7.dp)
     ) {
         val categoryIndices by scrollBar.list.categoryIndices.collectAsState()
         val items by remember { derivedStateOf { categoryIndices.map { scrollBar.list.allCategories[it] } } }
         items.iterator().withIndex().forEach { (index, category) ->
-            val animateFloat by animateFloatAsState(scrollBar.offset(index))
-            val modifier = if (scrollBar.isHeld.value) { Modifier.offset(x = (-animateFloat).dp) } else { Modifier }
-            Text(category.title, modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp)).clickable(onClick = scrollBar.handleClick(index)), textAlign = TextAlign.Center, fontSize = 15.sp, lineHeight = 20.sp)
+            val offsetIfHeld = -scrollBar.offset(index).dp
+            val offset = animateDpAsState(if (scrollBar.isHeld) offsetIfHeld else 0.dp)
+            val modifier = Modifier.offset(x = offset.value)
+            Text(category.title, modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp)), textAlign = TextAlign.Center, fontSize = 15.sp, lineHeight = 20.sp)
         }
     }
 }
