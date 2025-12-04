@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">uIndex</string>
+    <!-- 弹窗操作按钮 -->
+    <string name="action_open_settings">打开设置</string>
+    <string name="action_favorite">收藏</string>
+    <string name="action_unfavorite">取消收藏</string>
+    <string name="action_move_up">上移</string>
+    <string name="action_move_down">下移</string>
+    <string name="action_hide">隐藏</string>
+    <string name="action_show">显示</string>
+
+    <!-- 内容描述 -->
+    <string name="content_description_icon">应用程序图标</string>
+
+    <!-- 类别标题 -->
+    <string name="category_symbol_other"># &amp; 其他</string>
+
+    <!-- 日期格式 -->
+    <string name="date_format_day_month">EE, LLLd日</string>
+
+    <string name="hint_swipe_to_access_apps">在边缘滑动以访问所有应用</string>
+
+    <string name="hint_long_press_to_favorite">长按应用可将其添加到收藏夹</string>
+
+    <string name="hint_search">搜索</string>
+
+</resources>

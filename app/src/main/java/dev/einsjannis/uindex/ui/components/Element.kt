@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.einsjannis.uindex.R
 
 @Composable
 fun Info(text: String) {
@@ -29,10 +31,18 @@ fun Info(text: String) {
 }
 
 @Composable
-fun Element(title: String, painter: Painter, onClick: (() -> Unit)? = null, onLongClick: () -> Unit = {}, tint: Color = Color.Unspecified) {
-    var modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp))
+fun Element(
+    title: String,
+    painter: Painter,
+    onClick: (() -> Unit)? = null,
+    onLongClick: () -> Unit = {},
+    tint: Color = Color.Unspecified
+) {
+    var modifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(10.dp))
     onClick?.let { modifier = modifier.combinedClickable(onClick = it, onLongClick = onLongClick) }
-    Row (modifier = modifier) {
+    Row(modifier = modifier) {
         Icon(painter, tint)
         Title(title, modifier = Modifier.align(Alignment.CenterVertically))
     }
@@ -40,7 +50,14 @@ fun Element(title: String, painter: Painter, onClick: (() -> Unit)? = null, onLo
 
 @Composable
 fun Icon(painter: Painter, tint: Color = Color.Unspecified) {
-    Icon(painter, "icon", Modifier.padding(10.dp).size(40.dp), tint = tint)
+    Icon(
+        painter,
+        contentDescription = stringResource(R.string.content_description_icon),
+        modifier = Modifier
+            .padding(10.dp)
+            .size(40.dp),
+        tint = tint
+    )
 }
 
 @Composable
