@@ -17,7 +17,8 @@ class uIndex : Application() {
     val applicationScope = MainScope()
     override fun onCreate() {
         super.onCreate()
-        database = Room.databaseBuilder(applicationContext, Database::class.java, "launcher").build()
+        database =
+            Room.databaseBuilder(applicationContext, Database::class.java, "launcher").build()
         appsSource = AppsSource(packageManager)
         appInfoSource = AppInfoSource(database)
         appRepository = AppRepository(appsSource, appInfoSource)

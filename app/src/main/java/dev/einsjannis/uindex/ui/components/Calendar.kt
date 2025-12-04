@@ -1,5 +1,6 @@
 package dev.einsjannis.uindex.ui.components
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -19,10 +20,14 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
+import androidx.compose.ui.res.stringResource
+import dev.einsjannis.uindex.R
+@SuppressLint("LocalContextConfigurationRead")
 @Composable
 fun Calendar(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val dateFormatPattern = stringResource(R.string.date_format_day_month)
+    val currentLocale = context.resources.configuration.locales.get(0)
     Row(modifier.clip(RoundedCornerShape(10.dp)).clickable {
         context.startActivity(Intent(Intent.ACTION_MAIN)
             .apply {
@@ -37,6 +42,8 @@ fun Calendar(modifier: Modifier = Modifier) {
                 delay(1000)
             }
         }
-        Text(DateTimeFormatter.ofPattern("EE, d. LLL").format(date), modifier = Modifier.padding(horizontal = 10.dp))
-    }
+        Text(
+            DateTimeFormatter.ofPattern(dateFormatPattern, currentLocale).format(date),
+            modifier = Modifier.padding(horizontal = 10.dp)
+        )    }
 }

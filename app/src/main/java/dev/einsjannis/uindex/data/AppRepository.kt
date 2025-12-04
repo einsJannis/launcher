@@ -20,22 +20,26 @@ class AppRepository(private val appSource: AppsSource, private val appInfoSource
             )
         }
     }
+
     suspend fun toggleFavorite(app: App) {
         val oldInfo = app.favoriteInfo
         val newInfo = if (oldInfo == null) appInfoSource.newFavoriteInfo() else null
         appInfoSource.setFavoriteInfo(app.packageName, newInfo)
         load()
     }
+
     suspend fun setFavoriteInfo(app: App, favoriteInfo: FavoriteInfo?) {
         appInfoSource.setFavoriteInfo(app.packageName, favoriteInfo)
         load()
     }
+
     suspend fun toggleHidden(app: App) {
         val oldState = app.isHidden
         val newState = !oldState
         appInfoSource.setHidden(app.packageName, newState)
         load()
     }
+
     suspend fun setHidden(app: App, isHidden: Boolean) {
         appInfoSource.setHidden(app.packageName, isHidden)
         load()

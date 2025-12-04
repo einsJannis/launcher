@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">uIndex</string>
+    <!-- PopUp Action Buttons -->
+    <string name="action_open_settings">Open Settings</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_unfavorite">Unfavorite</string>
+    <string name="action_move_up">Move Up</string>
+    <string name="action_move_down">Move Down</string>
+    <string name="action_hide">Hide</string>
+    <string name="action_show">Show</string>
+
+    <!-- Content Description -->
+    <string name="content_description_icon">Application icon</string>
+
+    <!-- Category Titles -->
+    <string name="category_symbol_other"># &amp; Other</string>
+
+    <!-- Calendar Format -->
+    <string name="date_format_day_month">EE, d. LLL</string>
+
+    <string name="hint_swipe_to_access_apps">Swipe on edge to access apps</string>
+
+    <string name="hint_long_press_to_favorite">Long press on apps to add to favorites</string>
+
+    <string name="hint_search">Search</string>
+
 </resources>

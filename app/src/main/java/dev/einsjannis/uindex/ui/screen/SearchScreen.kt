@@ -25,14 +25,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.einsjannis.uindex.ui.components.App
 import dev.einsjannis.uindex.ui.components.PopUpViewModel
+import dev.einsjannis.uindex.R
 
 @Composable
-fun SearchScreen(popUp: PopUpViewModel, modifier: Modifier = Modifier, focusRequester: FocusRequester = remember { FocusRequester() }, searchViewModel: SearchViewModel = viewModel(factory = SearchViewModel.Factory)) {
-    Column(modifier = modifier.fillMaxWidth().padding(top = 20.dp, start = 30.dp, end = 30.dp)) {
+fun SearchScreen(
+    popUp: PopUpViewModel,
+    modifier: Modifier = Modifier,
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    searchViewModel: SearchViewModel = viewModel(factory = SearchViewModel.Factory)
+) {
+    val searchHint = stringResource(R.string.hint_search)
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp, start = 30.dp, end = 30.dp)
+    ) {
         val search = remember { mutableStateOf("") }
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
@@ -43,10 +55,20 @@ fun SearchScreen(popUp: PopUpViewModel, modifier: Modifier = Modifier, focusRequ
         TextField(
             value = search.value,
             onValueChange = { search.value = it },
-            placeholder = { Text("Search") },
-            leadingIcon = { Icon(Icons.Filled.Search, "Search", modifier = Modifier.align(Alignment.CenterHorizontally), tint = Color.White) },
+            placeholder = { Text(searchHint) },
+            leadingIcon = {
+                Icon(
+                    Icons.Filled.Search,
+                    "Search",
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    tint = Color.White
+                )
+            },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth().clip(CircleShape).focusRequester(focusRequester)
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(CircleShape)
+                .focusRequester(focusRequester)
         )
         val result by searchViewModel.result.collectAsState()
         LazyColumn(modifier = Modifier.padding(horizontal = 10.dp)) {
